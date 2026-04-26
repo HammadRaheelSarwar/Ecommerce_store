@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Plus, Trash2, Image, Save } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../../lib/api';
 
 const AdminAddProduct = () => {
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ const AdminAddProduct = () => {
         images,
       };
 
-      const res = await fetch('http://localhost:5000/api/products', {
+      const res = await fetch(apiUrl('/api/products'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify(payload)

@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import useApi from '../../hooks/useApi';
 import { SocketContext } from '../../context/SocketContext';
+import { apiUrl } from '../../lib/api';
 
 const AdminUsers = () => {
-  const { data: users, loading, error, execute } = useApi('http://localhost:5000/api/admin/users');
-  const actionApi = useApi('http://localhost:5000/api/admin/users', { method: 'PUT' });
+  const { data: users, loading, error, execute } = useApi(apiUrl('/api/admin/users'));
+  const actionApi = useApi(apiUrl('/api/admin/users'), { method: 'PUT' });
   
   const { socket, presenceMap } = useContext(SocketContext);
   const [userList, setUserList] = useState([]);
@@ -47,7 +48,7 @@ const AdminUsers = () => {
   const toggleBlock = async (userId) => {
     try {
       const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : '';
-      await actionApi.execute(`http://localhost:5000/api/admin/users/${userId}/block`, { headers: { Authorization: `Bearer ${token}` } });
+      await actionApi.execute(apiUrl(`/api/admin/users/${userId}/block`), { headers: { Authorization: `Bearer ${token}` } });
       setUserList(prev => prev.map(u => u._id === userId ? { ...u, isBlocked: !u.isBlocked } : u));
     } catch(err) {
       alert("Failed to update user status");

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { apiUrl } from '../lib/api';
 import './Auth.css';
 
 const Auth = () => {
@@ -28,7 +29,7 @@ const Auth = () => {
     setLoading(true);
     try {
       const endpoint = isLogin ? '/api/users/login' : '/api/users/register';
-      const res = await fetch(`http://localhost:5000${endpoint}`, {
+      const res = await fetch(apiUrl(endpoint), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -70,7 +71,7 @@ const Auth = () => {
     setErrorMsg('');
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/api/users/verify-2fa`, {
+      const res = await fetch(apiUrl('/api/users/verify-2fa'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: pendingUserId, token: twoFactorCode })

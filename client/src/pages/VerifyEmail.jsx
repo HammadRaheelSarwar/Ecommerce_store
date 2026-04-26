@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import { apiUrl } from '../lib/api';
 
 const RESEND_COOLDOWN_SECONDS = 60;
 const STORAGE_EMAIL_KEY = 'pendingVerificationEmail';
@@ -38,7 +39,7 @@ const VerifyEmail = () => {
 
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/verify-email', {
+      const res = await fetch(apiUrl('/api/auth/verify-email'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otpCode }),
@@ -67,7 +68,7 @@ const VerifyEmail = () => {
 
     setResendLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/auth/resend-otp', {
+      const res = await fetch(apiUrl('/api/auth/resend-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),

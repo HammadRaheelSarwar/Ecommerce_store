@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { RefreshCw, ChevronDown } from 'lucide-react';
 import { SocketContext } from '../../context/SocketContext';
 import toast, { Toaster } from 'react-hot-toast';
+import { apiUrl } from '../../lib/api';
 
 const STATUS_COLORS = {
   pending:    '#F59E0B',
@@ -20,7 +21,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/orders', {
+      const res = await fetch(apiUrl('/api/orders'), {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -44,7 +45,7 @@ const AdminOrders = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${id}/status`, {
+      const res = await fetch(apiUrl(`/api/orders/${id}/status`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status })

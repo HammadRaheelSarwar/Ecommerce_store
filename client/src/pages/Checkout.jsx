@@ -2,6 +2,7 @@ import React, { forwardRef, useContext, useImperativeHandle, useMemo, useRef, us
 import { useNavigate } from 'react-router-dom';
 import { CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { CartContext } from '../context/CartContext';
+import { apiUrl } from '../lib/api';
 import './Checkout.css';
 
 const stripePublishableKey =
@@ -38,7 +39,7 @@ const StripeCardSection = forwardRef(({ shippingName, amount, checkoutSessionId 
       setCardError('');
 
       try {
-        const paymentIntentRes = await fetch('http://localhost:5000/api/payment/create-intent', {
+        const paymentIntentRes = await fetch(apiUrl('/api/payment/create-intent'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ const Checkout = ({ stripeReady = false }) => {
       checkoutSessionId: checkoutSessionId.current,
     };
 
-    const res = await fetch('http://localhost:5000/api/orders', {
+    const res = await fetch(apiUrl('/api/orders'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

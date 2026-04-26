@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useApi from '../hooks/useApi';
+import { apiUrl } from '../lib/api';
 
 const SecurityPanel = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState('');
@@ -10,13 +11,13 @@ const SecurityPanel = () => {
   const [profileLoading, setProfileLoading] = useState(true);
   
   const token = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')).token : '';
-  const generateApi = useApi('http://localhost:5000/api/users/generate-2fa', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
-  const enableApi = useApi('http://localhost:5000/api/users/enable-2fa', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+  const generateApi = useApi(apiUrl('/api/users/generate-2fa'), { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
+  const enableApi = useApi(apiUrl('/api/users/enable-2fa'), { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
 
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/users/me', {
+        const res = await fetch(apiUrl('/api/users/me'), {
           headers: { Authorization: `Bearer ${token}` }
         });
         const data = await res.json();

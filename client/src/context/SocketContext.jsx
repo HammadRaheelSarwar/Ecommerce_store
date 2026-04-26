@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { io } from 'socket.io-client';
+import { API_BASE_URL } from '../lib/api';
 
 export const SocketContext = createContext();
 
@@ -14,7 +15,7 @@ export const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     // Attempt continuous fallback polling on failed WS
-    const newSocket = io('http://localhost:5000', {
+    const newSocket = io(API_BASE_URL, {
       reconnectionAttempts: 5,
       timeout: 10000,
     });
