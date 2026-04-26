@@ -1,0 +1,7 @@
+{
+  "name": "ecommerce-store",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix client ci && npm --prefix client run build"
+  }
+}
