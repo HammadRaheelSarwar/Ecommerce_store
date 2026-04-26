@@ -1,0 +1,124 @@
+.model3d-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 11, 25, 0.85); /* Deep dark overlay */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: m3d-fade-in 0.3s ease-out;
+}
+
+@keyframes m3d-fade-in {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(12px); }
+}
+
+.model3d-modal {
+  width: 100%;
+  max-width: 800px;
+  height: 85vh;
+  max-height: 800px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: m3d-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes m3d-slide-up {
+  from { opacity: 0; transform: translateY(40px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.model3d-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+.model3d-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
+}
+
+.model3d-header {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-weight: 500;
+  color: #fff;
+}
+
+.model3d-icon {
+  color: var(--accent, #00E5FF);
+}
+
+.model3d-container {
+  flex: 1;
+  position: relative;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Loading Bar */
+.model3d-progress-bar {
+  display: block;
+  width: 33%;
+  height: 4px;
+  max-width: 200px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.model3d-update-bar {
+  background-color: var(--accent, #00E5FF);
+  width: 0%;
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+
+model-viewer::part(default-progress-bar) {
+  display: none;
+}
+
+.model3d-error {
+  color: #ef4444;
+  font-size: 0.9rem;
+}
+
+.model3d-footer {
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
